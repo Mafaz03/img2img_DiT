@@ -49,3 +49,5 @@ if __name__ == "__main__":
 
     axes[0].imshow(img1)
     axes[1].imshow(img2)
+
+    plt.show()
