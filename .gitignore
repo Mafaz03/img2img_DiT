@@ -1,3 +1,9 @@
 .DS_Store
 cars
 .vscode
+sd-vae-ft-mse
+models--timm--vit_large_patch14_clip_224.openai
+vgg.pth
+__pycache__
+*.pth
+*.safetensors

@@ -4,7 +4,6 @@ from torchvision import transforms
 from pathlib import Path
 import os
 
-
 class img_dataset(Dataset):
     def __init__(self, root_dir: str, img_size: int = 256):
 
@@ -19,7 +18,7 @@ class img_dataset(Dataset):
 
         self.transform = transforms.Compose([
             transforms.ToTensor(),
-            transforms.Resize((256, 256)),
+            transforms.Resize((img_size, img_size)),
             transforms.Normalize([0.5, 0.5, 0.5], [0.5, 0.5, 0.5]),  # -> [-1, 1]
         ])
 

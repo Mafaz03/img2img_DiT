@@ -1,0 +1,42 @@
+{
+  "DiT": {
+    "d_model"         : 768,
+    "g_channels"      : 4,
+    "grid_size"       : 28,
+    "patch_size"      : 4,
+    "timestep_emb_dim": 768,
+    "number_emb_dim"  : 768,
+    "num_layers"      : 12,
+    "num_heads"       : 12,
+    "CLIP_dim"        : 768
+  },
+
+  "VAE": {
+    "scaling_factor" : 0.18215
+  },
+  
+  "Scheduler": {
+    "num_timesteps": 1000,
+    "beta_start"   : 0.0001,
+    "beta_end"     : 0.02
+  },
+
+  "Training": {
+    "epochs"           : 50,
+    "batch_size"       : 32,
+    "accumulation_step": 4,
+    "learning_rate"    : 1E-4   
+  },
+
+  "saves": {
+    "DiT_Path"      : "img2img_DiT.pth",
+    "DiT_Save_every": 5
+  },
+
+  "weights": {
+    "diffusion": 1,
+    "CLIP"     : 1,
+    "lpips"    : 1 
+  }
+
+}
