@@ -1,1 +1,1 @@
-from .DiT import *
+from .DiT_Module import *

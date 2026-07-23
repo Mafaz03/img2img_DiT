@@ -23,7 +23,7 @@
 
   "Training": {
     "epochs"           : 50,
-    "batch_size"       : 32,
+    "batch_size"       : 1,
     "accumulation_step": 4,
     "learning_rate"    : 1E-4   
   },
@@ -37,6 +37,16 @@
     "diffusion": 1,
     "CLIP"     : 1,
     "lpips"    : 1 
+  },
+
+  "Data": {
+    "dataset": "cars"
+  },
+
+  "Pretrained": {
+    "VAE" : "pretrained/sd-vae-ft-mse",
+    "CLIP": "pretrained/models--timm--vit_large_patch14_clip_224.openai/snapshots/18d0535469bb561bf468d76c1d73aa35156c922b/open_clip_model.safetensors",
+    "vgg" : "pretrained/vgg.pth"
   }
 
 }
