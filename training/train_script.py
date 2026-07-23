@@ -45,6 +45,10 @@ def train(vae           : torch.nn.Module,
     for param in clip_model.parameters():
         param.requires_grad = False
 
+    vae = vae.to(device)
+    clip_model = clip_model.to(device)
+    dit = dit.to(device) 
+    lpips_loss_fn = lpips_loss_fn.to(device)
 
     CLIP_MEAN = torch.tensor([0.48145466, 0.4578275, 0.40821073], device=device).view(1,3,1,1)
     CLIP_STD  = torch.tensor([0.26862954, 0.26130258, 0.27577711], device=device).view(1,3,1,1)
