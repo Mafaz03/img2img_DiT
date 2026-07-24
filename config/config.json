@@ -22,7 +22,7 @@
   },
 
   "Training": {
-    "epochs"           : 50,
+    "epochs"           : 1000,
     "batch_size"       : 1,
     "accumulation_step": 4,
     "learning_rate"    : 1E-4   
@@ -35,8 +35,8 @@
 
   "weights": {
     "diffusion": 1,
-    "CLIP"     : 1,
-    "lpips"    : 1 
+    "CLIP"     : 0.2,
+    "lpips"    : 0.2 
   },
 
   "Data": {
