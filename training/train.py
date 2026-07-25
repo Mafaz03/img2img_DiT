@@ -53,9 +53,11 @@ lpips_loss_fn = lpips.LPIPS(net='vgg', model_path = f"{ROOT}/{config['Pretrained
 
 optimizer = AdamW(dit.parameters(), lr=config["Training"]["learning_rate"], weight_decay=0)
 
+scheduler_lr = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max = config['Training']['epochs'])
+
 dataset = img_dataset(root_dir = f"{ROOT}/{config['Data']['dataset']}", img_size = 224)
 dataloader = DataLoader(dataset, batch_size = config["Training"]["batch_size"], shuffle = True)
 
 print("modules loaded")
 
-train(vae, dit, scheduler, MSE_loss_fn, clip_model, lpips_loss_fn, optimizer, dataloader)
+train(vae, dit, scheduler, MSE_loss_fn, clip_model, lpips_loss_fn, optimizer, scheduler_lr, dataloader)

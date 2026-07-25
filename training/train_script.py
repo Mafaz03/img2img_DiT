@@ -30,6 +30,7 @@ def train(vae           : torch.nn.Module,
           clip_model    : torch.nn.Module,
           lpips_loss_fn : torch.nn.Module,
           optimizer     : torch.optim,
+          scheduler_lr  : torch.optim,
           dataloader    : torch.utils.data.DataLoader
           ):
 
@@ -47,6 +48,8 @@ def train(vae           : torch.nn.Module,
 
     vae = vae.to(device)
     clip_model = clip_model.to(device)
+    clip_model.eval()
+
     dit = dit.to(device) 
     lpips_loss_fn = lpips_loss_fn.to(device)
 
@@ -74,6 +77,7 @@ def train(vae           : torch.nn.Module,
     for epoch in range(start_epoch, epochs):
         epoch_loss = 0.0
         step_count = 0
+        epoch_diff, epoch_clip, epoch_lpips = 0.0, 0.0, 0.0
         for condition_image, actual_image in dataloader:
             step_count += 1
 
@@ -158,19 +162,30 @@ def train(vae           : torch.nn.Module,
             loss.backward()
             if step_count % acc_steps == 0:
                 optimizer.step()
+                scheduler_lr.step()
                 optimizer.zero_grad()
 
             epoch_loss += loss.item()
 
+            epoch_diff  += diffusion_mse_loss.item()
+            epoch_clip  += clip_loss.item()
+            epoch_lpips += lpips_loss.item()
+
         # flush the left over
         if step_count % acc_steps != 0:
             optimizer.step()
+            scheduler_lr.step()
             optimizer.zero_grad()
 
         avg = (epoch_loss / len(dataloader)) * acc_steps
         losses.append(avg)
 
-        print(f"[DiT] Epoch {epoch+1}/{epochs}  loss={avg:.6f}")
+        avg_diff  = epoch_diff  / len(dataloader)
+        avg_clip  = epoch_clip  / len(dataloader)
+        avg_lpips = epoch_lpips / len(dataloader)
+
+        # print(f"[DiT] Epoch {epoch+1}/{epochs}  loss={avg:.6f}")
+        print(f"[DiT] Epoch {epoch+1}/{epochs}  loss={avg:.6f}   diff={avg_diff:.4f} clip={avg_clip:.4f} lpips={avg_lpips:.4f}")
         
         if (epoch % config["saves"]["DiT_Save_every"] == 0) or (epoch == epochs-1):
             torch.save(dit.state_dict(), config["saves"]["DiT_Path"])

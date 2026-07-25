@@ -32,11 +32,12 @@ class LinearNoiseScheduler:
         return (sqrt_alpha_cum_prod.to(original.device) * original
                 + sqrt_one_minus_alpha_cum_prod.to(original.device) * noise)
 
-    def get_x0(self, xt, pred, t):
+    def get_x0(self, xt, pred, t, clamp_range=None):
         sqrt_one_minus_ac = self.sqrt_one_minus_alpha_cum_prod.to(xt.device)[t].view(-1, 1, 1, 1)
         sqrt_ac = torch.sqrt(self.alpha_cum_prod.to(xt.device)[t]).view(-1, 1, 1, 1)
         x0 = (xt - sqrt_one_minus_ac * pred) / sqrt_ac
-        x0 = torch.clamp(x0, -1., 1.)
+        if clamp_range is not None:
+            x0 = torch.clamp(x0, *clamp_range)
         return x0
 
     def sample_prev_timestep(self, xt, pred, t):
