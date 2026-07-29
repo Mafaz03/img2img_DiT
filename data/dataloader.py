@@ -28,12 +28,13 @@ class img_dataset(Dataset):
     def __getitem__(self, index):
 
         selected = self.all_pths[index]
+        # selected = '/'.join(str(selected).split("/")[:-1]) + "/212car.jpg"
         img = plt.imread(selected)
         img1, img2 = img[:, :img.shape[1]//2, :], img[:, img.shape[1]//2:, :]
-        return self.transform(img2), self.transform(img1)
+        return self.transform(img1), self.transform(img2)
     
 if __name__ == "__main__":
-    dataset = img_dataset("cars", 256)
+    dataset = img_dataset("buildings", 256)
     img1, img2 = next(iter(DataLoader(dataset)))
     print(img1.shape)
     print(img2.shape)

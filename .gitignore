@@ -7,3 +7,5 @@ vgg.pth
 __pycache__
 *.pth
 *.safetensors
+buildings
+*.out

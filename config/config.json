@@ -30,7 +30,8 @@
 
   "saves": {
     "DiT_Path"      : "img2img_DiT.pth",
-    "DiT_Save_every": 5
+    "DiT_Save_every": 5,
+    "load_model_for_traning": 1
   },
 
   "weights": {
