@@ -3,7 +3,7 @@
 A PyTorch implementation of an image-to-image diffusion transformer that learns to generate one half of an image from the other using a latent diffusion setup with CLIP conditioning.
 
 
-![result](results/compilation.png)
+![result](results/Compilation2.jpeg)
 
 ## Overview
 
